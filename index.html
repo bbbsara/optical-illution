@@ -70,23 +70,7 @@
             border: 1px solid #ddd;
         }
 
-        .confidence-section {
-            background: #ecf0f1;
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px 0;
-            border: 1px solid #bdc3c7;
-        }
-        
-        .radio-group {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 15px;
-            font-size: 18px;
-        }
-        
-        .radio-group label { cursor: pointer; }
+        /* تم حذف تنسيقات قسم الثقة */
 
         #feedback-modal {
             position: fixed;
@@ -159,17 +143,6 @@
         <h2 id="question-text">السؤال يظهر هنا</h2>
         <img id="illusion-img" src="" alt="Illusion Image">
 
-        <div class="confidence-section">
-            <label style="font-weight:bold;">ما درجة ثقتك في إجابتك؟ (1=منخفضة، 5=عالية)</label>
-            <div class="radio-group">
-                <label><input type="radio" name="conf" value="1"> 1</label>
-                <label><input type="radio" name="conf" value="2"> 2</label>
-                <label><input type="radio" name="conf" value="3" checked> 3</label>
-                <label><input type="radio" name="conf" value="4"> 4</label>
-                <label><input type="radio" name="conf" value="5"> 5</label>
-            </div>
-        </div>
-
         <div id="answer-buttons">
             <button class="btn btn-true" onclick="submitAnswer('True')">نعم (True)</button>
             <button class="btn btn-false" onclick="submitAnswer('False')">لا (False)</button>
@@ -194,7 +167,7 @@
 
     <script>
         // ==========================================
-        //  رابط Google Web App (كما هو)
+        //  رابط Google Web App
         // ==========================================
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwsX4FaBoQAyqtvtnYtS4d8B6eUnWXWK2HoPLoxQnufLMsa5Rkx49hCYbu3COIGX8ZO/exec"; 
         // ==========================================
@@ -233,23 +206,20 @@
             { id: 30, type: "Size", strength: 3, image: "images/30.jpg", question: "هذه الفيلة لها ثلاثة أحجام مختلفة، صحيح أم خطأ؟", correctAnswer: "False", explanation: "تختلف أحجام الأفيال من زاوية إلى أخرى، لكنها في الواقع متساوية." }
         ];
 
-        // متغيرات النظام
         let currentTrial = 0;
         let participantData = {};
         let displayTime = 0;
 
         function startTest() {
-            // هنا نأخذ القيم من الخانات الجديدة
-            const pName = document.getElementById('p-name').value.trim(); // الاسم
-            const pClass = document.getElementById('p-class').value;     // الصف
-            const pGender = document.getElementById('p-gender').value;   // الجنس
+            const pName = document.getElementById('p-name').value.trim();
+            const pClass = document.getElementById('p-class').value;
+            const pGender = document.getElementById('p-gender').value;
 
             if (!pName || !pClass || !pGender) {
                 alert("الرجاء تعبئة جميع البيانات (الاسم، الصف، والجنس)");
                 return;
             }
 
-            // حفظنا الاسم مكان الـ id، والصف مكان الـ age
             participantData = { id: pName, age: pClass, gender: pGender };
             
             document.getElementById('start-screen').classList.add('hidden');
@@ -268,7 +238,6 @@
             document.getElementById('illusion-img').src = trial.image;
             document.getElementById('illusion-type-display').textContent = trial.type;
             document.getElementById('progress').textContent = `السؤال ${currentTrial + 1} من ${illusions.length}`;
-            document.querySelector('input[name="conf"][value="3"]').checked = true;
             displayTime = Date.now();
         }
 
@@ -278,7 +247,8 @@
 
             const reactionTimeMs = clickTime - displayTime;
             const isCorrect = (userAnswer === trial.correctAnswer) ? 1 : 0;
-            const confidence = document.querySelector('input[name="conf"]:checked').value;
+            
+            // تم حذف كود الثقة من هنا
 
             let susceptibilityScore;
             if (isCorrect === 0) {
@@ -287,11 +257,11 @@
                 susceptibilityScore = reactionTimeMs * 0.5;
             }
 
-            const procSpeedIndex = (1000 / reactionTimeMs).toFixed(2);
+            // تم حذف مؤشر سرعة المعالجة من هنا لعدم الحاجة
 
             const dataToSend = {
-                participant_id: participantData.id,  // سيرسل الاسم هنا
-                age: participantData.age,            // سيرسل الصف هنا
+                participant_id: participantData.id,
+                age: participantData.age,
                 gender: participantData.gender,
                 illusion_id: trial.id,
                 illusion_type: trial.type,
@@ -301,9 +271,8 @@
                 correct_answer: trial.correctAnswer,
                 is_correct: isCorrect,
                 reaction_time: reactionTimeMs,
-                confidence: confidence,
+                // تم حذف confidence و processing_speed
                 susceptibility_score: susceptibilityScore,
-                processing_speed: procSpeedIndex,
                 notes: "Standard Trial"
             };
 
