@@ -135,10 +135,12 @@
 <body>
 
     <div id="start-screen" class="container">
-        <h1>مقياس الإدراك البصري (نسخة علمية)</h1>
-        <p>الرجاء إدخال بيانات المشارك لبدء الجلسة:</p>
-        <input type="text" id="p-id" placeholder="معرف الطالب (Participant ID)">
-        <input type="number" id="p-age" placeholder="العمر">
+        <h1>مقياس الإدراك البصري</h1>
+        <p>الرجاء إدخال البيانات لبدء الاختبار:</p>
+        
+        <input type="text" id="p-name" placeholder="اسم الطالب الثلاثي">
+        <input type="text" id="p-class" placeholder="الصف (مثلاً: الخامس أ)">
+        
         <select id="p-gender">
             <option value="">اختر الجنس</option>
             <option value="Male">ذكر</option>
@@ -185,14 +187,14 @@
 
     <div id="end-screen" class="container hidden">
         <h1 style="color:green;">انتهت التجربة</h1>
-        <p>تم تسجيل جميع البيانات العلمية بنجاح.</p>
+        <p>تم تسجيل جميع البيانات بنجاح.</p>
         <br>
         <button class="btn" onclick="location.reload()">تسجيل طالب جديد</button>
     </div>
 
     <script>
         // ==========================================
-        //  رابط Google Web App (تم التحديث)
+        //  رابط Google Web App (كما هو)
         // ==========================================
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwsX4FaBoQAyqtvtnYtS4d8B6eUnWXWK2HoPLoxQnufLMsa5Rkx49hCYbu3COIGX8ZO/exec"; 
         // ==========================================
@@ -237,16 +239,19 @@
         let displayTime = 0;
 
         function startTest() {
-            const pid = document.getElementById('p-id').value.trim();
-            const age = document.getElementById('p-age').value;
-            const gender = document.getElementById('p-gender').value;
+            // هنا نأخذ القيم من الخانات الجديدة
+            const pName = document.getElementById('p-name').value.trim(); // الاسم
+            const pClass = document.getElementById('p-class').value;     // الصف
+            const pGender = document.getElementById('p-gender').value;   // الجنس
 
-            if (!pid || !age || !gender) {
-                alert("الرجاء تعبئة جميع البيانات الديموغرافية");
+            if (!pName || !pClass || !pGender) {
+                alert("الرجاء تعبئة جميع البيانات (الاسم، الصف، والجنس)");
                 return;
             }
 
-            participantData = { id: pid, age: age, gender: gender };
+            // حفظنا الاسم مكان الـ id، والصف مكان الـ age
+            participantData = { id: pName, age: pClass, gender: pGender };
+            
             document.getElementById('start-screen').classList.add('hidden');
             document.getElementById('test-screen').classList.remove('hidden');
             loadTrial();
@@ -285,8 +290,8 @@
             const procSpeedIndex = (1000 / reactionTimeMs).toFixed(2);
 
             const dataToSend = {
-                participant_id: participantData.id,
-                age: participantData.age,
+                participant_id: participantData.id,  // سيرسل الاسم هنا
+                age: participantData.age,            // سيرسل الصف هنا
                 gender: participantData.gender,
                 illusion_id: trial.id,
                 illusion_type: trial.type,
