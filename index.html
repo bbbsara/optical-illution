@@ -165,7 +165,7 @@
 
     <script>
         // ==========================================
-        //  الرابط الجديد الذي أرسلته (تم التحديث)
+        //  الرابط الخاص بك (لا يحتاج تغيير)
         // ==========================================
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwsX4FaBoQAyqtvtnYtS4d8B6eUnWXWK2HoPLoxQnufLMsa5Rkx49hCYbu3COIGX8ZO/exec"; 
 
@@ -217,9 +217,7 @@
                 return;
             }
 
-            // ربط الاسم والصف بالمتغيرات لإرسالها للسكربت
             participantData = { id: pName, age: pClass, gender: pGender };
-            
             document.getElementById('start-screen').classList.add('hidden');
             document.getElementById('test-screen').classList.remove('hidden');
             loadTrial();
@@ -253,9 +251,9 @@
                 susceptibilityScore = reactionTimeMs * 0.5;
             }
 
-            // ===========================================
-            //  إعداد البيانات للإرسال (10 أعمدة فقط)
-            // ===========================================
+            // =======================================================
+            //  ✅ التصحيح النهائي: إرسال الـ 10 أعمدة فقط وحصرياً
+            // =======================================================
             const dataToSend = {
                 participant_id: participantData.id,  // 1. اسم الطالب
                 age: participantData.age,            // 2. الصف
@@ -267,6 +265,7 @@
                 is_correct: isCorrect,               // 8. النتيجة (0/1)
                 reaction_time: reactionTimeMs,       // 9. زمن الاستجابة
                 susceptibility_score: susceptibilityScore // 10. مؤشر الانخداع
+                // تم حذف كل البيانات الزائدة التي كانت تسبب الزحف
             };
 
             fetch(GOOGLE_SCRIPT_URL, {
@@ -285,7 +284,7 @@
             const text = document.getElementById('feedback-explanation');
 
             if (isCorrect) {
-                title.textContent = "✅ إجابة صحيحة";
+                title.textContent = "✅ إجابة صحيحة (لم تنخدع)";
                 title.style.color = "#27ae60";
             } else {
                 title.textContent = "❌ انخدعت بالوهم!";
