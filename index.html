@@ -70,8 +70,6 @@
             border: 1px solid #ddd;
         }
 
-        /* تم حذف تنسيقات قسم الثقة */
-
         #feedback-modal {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -153,7 +151,7 @@
         <div class="feedback-content">
             <h2 id="feedback-title">عنوان النتيجة</h2>
             <div class="feedback-text" id="feedback-explanation"></div>
-            <p style="font-size: 13px; color: gray;">تم تسجيل المؤشرات العلمية.</p>
+            <p style="font-size: 13px; color: gray;">تم تسجيل النتيجة.</p>
             <button class="btn" onclick="nextTrial()">السؤال التالي ➜</button>
         </div>
     </div>
@@ -167,12 +165,11 @@
 
     <script>
         // ==========================================
-        //  رابط Google Web App
+        //  رابط السكربت (أنت وضعته سابقاً وهو صحيح)
         // ==========================================
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwsX4FaBoQAyqtvtnYtS4d8B6eUnWXWK2HoPLoxQnufLMsa5Rkx49hCYbu3COIGX8ZO/exec"; 
-        // ==========================================
 
-        // مصفوفة الأسئلة الكاملة (30 سؤال)
+        // مصفوفة الأسئلة (30 سؤال)
         const illusions = [
             { id: 1, type: "Color", strength: 2, image: "images/1.jpg", question: "المجلد الأزرق الفاتح أكبر من المجلد الأسود، صحيح أم خطأ؟", correctAnswer: "True", explanation: "المجلد الأزرق الفاتح أكبر من المجلد الأسود. مع ذلك، قد يبدو المجلد الأسود أكبر حجمًا بسبب لونه." },
             { id: 2, type: "Contrast", strength: 3, image: "images/2.jpg", question: "المربع الصغير على اليسار هو ظل أفتح من المربع الموجود على اليمين، صحيح أم خطأ؟", correctAnswer: "False", explanation: "المربعان (أ) و(ب) لهما نفس درجة اللون الرمادي. سطوع المنطقة المحيطة بكل مربع يُغيّر إدراكنا للون." },
@@ -220,6 +217,7 @@
                 return;
             }
 
+            // هنا نربط الاسم والصف بالمتغيرات التي يرسلها السكربت
             participantData = { id: pName, age: pClass, gender: pGender };
             
             document.getElementById('start-screen').classList.add('hidden');
@@ -247,8 +245,6 @@
 
             const reactionTimeMs = clickTime - displayTime;
             const isCorrect = (userAnswer === trial.correctAnswer) ? 1 : 0;
-            
-            // تم حذف كود الثقة من هنا
 
             let susceptibilityScore;
             if (isCorrect === 0) {
@@ -257,23 +253,20 @@
                 susceptibilityScore = reactionTimeMs * 0.5;
             }
 
-            // تم حذف مؤشر سرعة المعالجة من هنا لعدم الحاجة
-
+            // ===========================================
+            //  إعداد البيانات للإرسال (10 أعمدة فقط)
+            // ===========================================
             const dataToSend = {
-                participant_id: participantData.id,
-                age: participantData.age,
-                gender: participantData.gender,
-                illusion_id: trial.id,
-                illusion_type: trial.type,
-                illusion_strength: trial.strength,
-                display_timestamp: new Date().toISOString(),
-                answer: userAnswer,
-                correct_answer: trial.correctAnswer,
-                is_correct: isCorrect,
-                reaction_time: reactionTimeMs,
-                // تم حذف confidence و processing_speed
-                susceptibility_score: susceptibilityScore,
-                notes: "Standard Trial"
+                participant_id: participantData.id,  // 1. اسم الطالب
+                age: participantData.age,            // 2. الصف
+                gender: participantData.gender,      // 3. الجنس
+                illusion_type: trial.type,           // 4. نوع الوهم
+                illusion_strength: trial.strength,   // 5. قوة الوهم
+                answer: userAnswer,                  // 6. إجابة الطالب
+                correct_answer: trial.correctAnswer, // 7. الإجابة الصحيحة
+                is_correct: isCorrect,               // 8. النتيجة (0/1)
+                reaction_time: reactionTimeMs,       // 9. زمن الاستجابة
+                susceptibility_score: susceptibilityScore // 10. مؤشر الانخداع
             };
 
             fetch(GOOGLE_SCRIPT_URL, {
@@ -292,7 +285,7 @@
             const text = document.getElementById('feedback-explanation');
 
             if (isCorrect) {
-                title.textContent = "✅ إجابة صحيحة (لم تنخدع)";
+                title.textContent = "✅ إجابة صحيحة";
                 title.style.color = "#27ae60";
             } else {
                 title.textContent = "❌ انخدعت بالوهم!";
