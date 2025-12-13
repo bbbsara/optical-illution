@@ -165,7 +165,7 @@
 
     <script>
         // ==========================================
-        //  الرابط الخاص بك (لا يحتاج تغيير)
+        //  الرابط الخاص بك (تأكد أنه الصحيح)
         // ==========================================
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwsX4FaBoQAyqtvtnYtS4d8B6eUnWXWK2HoPLoxQnufLMsa5Rkx49hCYbu3COIGX8ZO/exec"; 
 
@@ -217,7 +217,9 @@
                 return;
             }
 
+            // حفظ البيانات المدخلة
             participantData = { id: pName, age: pClass, gender: pGender };
+            
             document.getElementById('start-screen').classList.add('hidden');
             document.getElementById('test-screen').classList.remove('hidden');
             loadTrial();
@@ -252,20 +254,19 @@
             }
 
             // =======================================================
-            //  ✅ التصحيح النهائي: إرسال الـ 10 أعمدة فقط وحصرياً
+            //  ✅ التعديل هنا: استخدام الأسماء الجديدة للمتغيرات
             // =======================================================
             const dataToSend = {
-                participant_id: participantData.id,  // 1. اسم الطالب
-                age: participantData.age,            // 2. الصف
-                gender: participantData.gender,      // 3. الجنس
-                illusion_type: trial.type,           // 4. نوع الوهم
-                illusion_strength: trial.strength,   // 5. قوة الوهم
-                answer: userAnswer,                  // 6. إجابة الطالب
-                correct_answer: trial.correctAnswer, // 7. الإجابة الصحيحة
-                is_correct: isCorrect,               // 8. النتيجة (0/1)
-                reaction_time: reactionTimeMs,       // 9. زمن الاستجابة
-                susceptibility_score: susceptibilityScore // 10. مؤشر الانخداع
-                // تم حذف كل البيانات الزائدة التي كانت تسبب الزحف
+                student_name: participantData.id,    // الاسم يذهب للمتغير الجديد
+                student_class: participantData.age,  // الصف يذهب للمتغير الجديد
+                gender: participantData.gender,
+                illusion_type: trial.type,
+                illusion_strength: trial.strength,
+                answer: userAnswer,
+                correct_answer: trial.correctAnswer,
+                is_correct: isCorrect,
+                reaction_time: reactionTimeMs,
+                susceptibility_score: susceptibilityScore
             };
 
             fetch(GOOGLE_SCRIPT_URL, {
@@ -284,7 +285,7 @@
             const text = document.getElementById('feedback-explanation');
 
             if (isCorrect) {
-                title.textContent = "✅ إجابة صحيحة (لم تنخدع)";
+                title.textContent = "✅ إجابة صحيحة";
                 title.style.color = "#27ae60";
             } else {
                 title.textContent = "❌ انخدعت بالوهم!";
