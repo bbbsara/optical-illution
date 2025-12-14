@@ -165,9 +165,9 @@
 
     <script>
         // ==========================================
-        //  الرابط الخاص بك (تأكد أنه الصحيح)
+        //  تم تحديث الرابط هنا بالرابط الجديد
         // ==========================================
-        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwsX4FaBoQAyqtvtnYtS4d8B6eUnWXWK2HoPLoxQnufLMsa5Rkx49hCYbu3COIGX8ZO/exec"; 
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzp1DNBLO-QlvAb5CtzoNNa1G0BojonaTHgSN9EVGgTpQxl6RW1os1k2Azz0nYdJs4R/exec"; 
 
         // مصفوفة الأسئلة (30 سؤال)
         const illusions = [
@@ -217,7 +217,7 @@
                 return;
             }
 
-            // حفظ البيانات المدخلة
+            // حفظ البيانات
             participantData = { id: pName, age: pClass, gender: pGender };
             
             document.getElementById('start-screen').classList.add('hidden');
@@ -254,19 +254,19 @@
             }
 
             // =======================================================
-            //  ✅ التعديل هنا: استخدام الأسماء الجديدة للمتغيرات
+            //  تم اعتماد إرسال 10 أعمدة فقط بالمتغيرات الجديدة
             // =======================================================
             const dataToSend = {
-                student_name: participantData.id,    // الاسم يذهب للمتغير الجديد
-                student_class: participantData.age,  // الصف يذهب للمتغير الجديد
-                gender: participantData.gender,
-                illusion_type: trial.type,
-                illusion_strength: trial.strength,
-                answer: userAnswer,
-                correct_answer: trial.correctAnswer,
-                is_correct: isCorrect,
-                reaction_time: reactionTimeMs,
-                susceptibility_score: susceptibilityScore
+                student_name: participantData.id,    // الاسم
+                student_class: participantData.age,  // الصف
+                gender: participantData.gender,      // الجنس
+                illusion_type: trial.type,           // نوع الوهم
+                illusion_strength: trial.strength,   // قوة الوهم
+                answer: userAnswer,                  // إجابة الطالب
+                correct_answer: trial.correctAnswer, // الإجابة الصحيحة
+                is_correct: isCorrect,               // النتيجة (0/1)
+                reaction_time: reactionTimeMs,       // زمن الاستجابة
+                susceptibility_score: susceptibilityScore // مؤشر الانخداع
             };
 
             fetch(GOOGLE_SCRIPT_URL, {
