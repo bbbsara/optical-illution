@@ -1,311 +1,66 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مقياس الاستجابة الإدراكية للأوهام البصرية</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap');
+<style>
+.vision-mission-goals {
+  display: flex;
+  flex-wrap: wrap;
+  text-align: right;
+  font-family: "Tahoma", "Arial", sans-serif;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+  align-items: stretch; /* يساوي الارتفاع */
+}
 
-        body {
-            font-family: 'Tajawal', sans-serif;
-            background-color: #f4f6f9;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            text-align: center;
-            color: #333;
-        }
+.vision-mission-goals .box {
+  flex: 1;
+  min-width: 250px;
+  padding: 40px 25px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
 
-        .container {
-            background: white;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-            width: 100%;
-            max-width: 750px;
-        }
+.vision-mission-goals h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  font-weight: bold;
+  color: #fff;
+}
 
-        h1, h2 { color: #2c3e50; margin-bottom: 20px; }
-        
-        input, select {
-            padding: 12px;
-            width: 70%;
-            margin: 10px 0;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-family: 'Tajawal';
-            font-size: 16px;
-            text-align: center;
-        }
+.vision-mission-goals p {
+  font-size: 16px;
+  line-height: 1.9;
+  margin: 0 0 12px;
+}
+</style>
 
-        .btn {
-            background: #3498db;
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 18px;
-            margin: 10px;
-            font-family: 'Tajawal';
-            transition: transform 0.2s, background 0.3s;
-        }
+<div class="vision-mission-goals" dir="rtl">
 
-        .btn:hover { background: #2980b9; transform: scale(1.02); }
-        .btn-true { background: #27ae60; width: 45%; } 
-        .btn-true:hover { background: #219150; }
-        .btn-false { background: #c0392b; width: 45%; } 
-        .btn-false:hover { background: #a93226; }
+  <!-- الرؤية -->
+  <div class="box" style="background-color:#bf9937;">
+    <h2>الرؤية</h2>
+    <p>مؤسسة رائدة ومتميزة بالتعليم العالي والبحث العلمي وخدمة المجتمع على المستوى المحلي والإقليمي.</p>
+    <p>وصولاً لمصاف الجامعات العالمية عالية الجودة.</p>
+  </div>
 
-        #illusion-img {
-            max-width: 100%;
-            height: auto;
-            max-height: 450px;
-            border-radius: 10px;
-            margin: 20px 0;
-            border: 1px solid #ddd;
-        }
+  <!-- الرسالة -->
+  <div class="box" style="background-color:#43596c;">
+    <h2>الرسالة</h2>
+    <p>توفير بيئة تعليمية متميزة ودعم البحوث المنتجة ذات الجودة العالية.</p>
+    <p>وسد متطلبات سوق العمل بالمخرجات المطلوبة.</p>
+    <p>التي تقوم على تطبيق تكنولوجيا المعلومات من أجل رفع مستوى الأداء.</p>
+    <p>وسيقدم الجهد المبذول ضمن الإمكانات المتاحة والمحفّزة للابتكار والريادة.</p>
+  </div>
 
-        #feedback-modal {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.85);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
+  <!-- الأهداف -->
+  <div class="box" style="background-color:#1b222a;">
+    <h2>الأهداف</h2>
+    <p>تطوير قدرات الجامعة البشرية والمادية والعلمية (نتاج).</p>
+    <p>الارتقاء بمستوى البحث العلمي محلياً وعالمياً (نتاج، بعد علمي).</p>
+    <p>التنوع بأساليب التعليم الحديثة لتلبية متطلبات الجودة (مهارة جودة).</p>
+    <p>حوكمة الجامعة إدارياً ومالياً (حوكمة).</p>
+    <p>التحول إلى جامعة منتجة (تمويل).</p>
+    <p>تعزيز دور الجامعة في خدمة المجتمع (سوق العمل).</p>
+  </div>
 
-        .feedback-content {
-            background: white;
-            padding: 40px;
-            border-radius: 15px;
-            max-width: 600px;
-            width: 90%;
-            text-align: center;
-            position: relative;
-        }
-
-        .feedback-text {
-            font-size: 18px;
-            line-height: 1.8;
-            color: #444;
-            background: #f9f9f9;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 20px 0;
-            text-align: right;
-        }
-
-        .hidden { display: none; }
-        
-        .top-info {
-            display: flex;
-            justify-content: space-between;
-            font-size: 14px;
-            color: #7f8c8d;
-            margin-bottom: 10px;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 10px;
-        }
-    </style>
-</head>
-<body>
-
-    <div id="start-screen" class="container">
-        <h1>مقياس الإدراك البصري</h1>
-        <p>الرجاء إدخال البيانات لبدء الاختبار:</p>
-        
-        <input type="text" id="p-name" placeholder="اسم الطالب الثلاثي">
-        <input type="text" id="p-class" placeholder="الصف (مثلاً: الخامس أ)">
-        
-        <select id="p-gender">
-            <option value="">اختر الجنس</option>
-            <option value="Male">ذكر</option>
-            <option value="Female">أنثى</option>
-        </select>
-        <br><br>
-        <button class="btn" onclick="startTest()">بدء الاختبار</button>
-    </div>
-
-    <div id="test-screen" class="container hidden">
-        <div class="top-info">
-            <span id="progress">سؤال 1 من 30</span>
-            <span>النوع: <span id="illusion-type-display" style="font-weight:bold;">Geometric</span></span>
-        </div>
-
-        <h2 id="question-text">السؤال يظهر هنا</h2>
-        <img id="illusion-img" src="" alt="Illusion Image">
-
-        <div id="answer-buttons">
-            <button class="btn btn-true" onclick="submitAnswer('True')">نعم (True)</button>
-            <button class="btn btn-false" onclick="submitAnswer('False')">لا (False)</button>
-        </div>
-    </div>
-
-    <div id="feedback-modal">
-        <div class="feedback-content">
-            <h2 id="feedback-title">عنوان النتيجة</h2>
-            <div class="feedback-text" id="feedback-explanation"></div>
-            <p style="font-size: 13px; color: gray;">تم تسجيل النتيجة.</p>
-            <button class="btn" onclick="nextTrial()">السؤال التالي ➜</button>
-        </div>
-    </div>
-
-    <div id="end-screen" class="container hidden">
-        <h1 style="color:green;">انتهت التجربة</h1>
-        <p>تم تسجيل جميع البيانات بنجاح.</p>
-        <br>
-        <button class="btn" onclick="location.reload()">تسجيل طالب جديد</button>
-    </div>
-
-    <script>
-        // ==========================================
-        //  تم تحديث الرابط هنا بالرابط الجديد
-        // ==========================================
-        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzp1DNBLO-QlvAb5CtzoNNa1G0BojonaTHgSN9EVGgTpQxl6RW1os1k2Azz0nYdJs4R/exec"; 
-
-        // مصفوفة الأسئلة (30 سؤال)
-        const illusions = [
-            { id: 1, type: "Color", strength: 2, image: "images/1.jpg", question: "المجلد الأزرق الفاتح أكبر من المجلد الأسود، صحيح أم خطأ؟", correctAnswer: "True", explanation: "المجلد الأزرق الفاتح أكبر من المجلد الأسود. مع ذلك، قد يبدو المجلد الأسود أكبر حجمًا بسبب لونه." },
-            { id: 2, type: "Contrast", strength: 3, image: "images/2.jpg", question: "المربع الصغير على اليسار هو ظل أفتح من المربع الموجود على اليمين، صحيح أم خطأ؟", correctAnswer: "False", explanation: "المربعان (أ) و(ب) لهما نفس درجة اللون الرمادي. سطوع المنطقة المحيطة بكل مربع يُغيّر إدراكنا للون." },
-            { id: 3, type: "Geometric", strength: 2, image: "images/3.jpg", question: "القلم الرصاص أطول من قلم الحبر صحيح أم خطأ؟", correctAnswer: "False", explanation: "القلم والقلم الرصاص لهما نفس الحجم تمامًا." },
-            { id: 4, type: "Size", strength: 2, image: "images/4.jpg", question: "الحصان الذي على اليمين أصغر من الحصان الذي على اليسار، صحيح أم خطأ؟", correctAnswer: "True", explanation: "الحصان على اليمين أصغر من الحصان على اليسار." },
-            { id: 5, type: "Geometric", strength: 3, image: "images/5.jpg", question: "الخطوط الحمراء لها نفس الطول، صحيح أم خطأ؟", correctAnswer: "True", explanation: "استخدم إصبعك لقياس الخطين، وستجد أنهما متساويان في الطول." },
-            { id: 6, type: "Size", strength: 2, image: "images/6.jpg", question: "الدب على اليسار أكبر من الدب على اليمين، صحيح أم خطأ؟", correctAnswer: "False", explanation: "هذان الدبّان بنفس الحجم تمامًا." },
-            { id: 7, type: "Size", strength: 2, image: "images/7.jpg", question: "هاتين البرتقالتين لهما نفس الحجم، صحيح أم خطأ؟", correctAnswer: "False", explanation: "الصورة على اليمين أكبر. للكلمات دلالاتٌ تُحفّز إدراكاتنا." },
-            { id: 8, type: "Geometric", strength: 3, image: "images/8.jpg", question: "الخط العمودي أطول من الخط الأفقي، صحيح أم خطأ؟", correctAnswer: "False", explanation: "على الرغم من أن الخط العمودي يبدو أطول، إلا أنك إذا قمت بالقياس، فستجد أن كلا الخطين لهما نفس الحجم." },
-            { id: 9, type: "Size", strength: 1, image: "images/9.jpg", question: "قطعة الحلوى الموجودة على اليسار أكبر، صحيح أم خطأ؟", correctAnswer: "True", explanation: "نعم، قطعة الشوكولاتة على اليسار هي الأكبر حجمًا." },
-            { id: 10, type: "Geometric", strength: 3, image: "images/10.jpg", question: "هذه الخطوط الأفقية ليست مائلة، صحيح أم خطأ؟", correctAnswer: "True", explanation: "تبدو الخطوط الأفقية مائلة لعدم تطابق الخطوط العمودية تمامًا. خداع بصري آخر." },
-            { id: 11, type: "Geometric", strength: 3, image: "images/11.jpg", question: "هذه الخطوط لها نفس الطول، صحيح أم خطأ؟", correctAnswer: "True", explanation: "إن كون رؤوس الأسهم طبيعية أو مقلوبة يغير من تصورك لطول الخط." },
-            { id: 12, type: "Geometric", strength: 3, image: "images/12.jpg", question: "الخط B أطول، صحيح أم خطأ؟", correctAnswer: "False", explanation: "هذا هو وهم مولر-لاير، الخطوط متساوية لكن اتجاه الأسهم يخدع العين." },
-            { id: 13, type: "Contrast", strength: 3, image: "images/13.jpg", question: "كل المستطيلات الداخلية لها نفس الحجم، صحيح أم خطأ؟", correctAnswer: "True", explanation: "يُغيّر تباين السطوع إدراكنا لحجم الجسم. جميع المستطيلات الداخلية لها نفس الحجم تمامًا." },
-            { id: 14, type: "Size", strength: 2, image: "images/14.jpg", question: "من بين البيتين، الذي على اليسار هو الأصغر، صحيح أم خطأ؟", correctAnswer: "True", explanation: "المنزل على اليمين أكبر." },
-            { id: 15, type: "Size", strength: 3, image: "images/15.jpg", question: "هاتين القبعتين لهما نفس الحجم تمامًا، صحيح أم خطأ؟", correctAnswer: "True", explanation: "القبعات بنفس الحجم تمامًا، لكن طريقة وضعهما تخلق الوهم." },
-            { id: 16, type: "Size", strength: 2, image: "images/16.jpg", question: "الخنزير في الوسط هو الأصغر، صحيح أم خطأ؟", correctAnswer: "False", explanation: "الخنازير الثلاثة متشابهة. الخنزير الأوسط يبدو أصغر حجمًا فقط لأن إخوته يحجبون الجوانب." },
-            { id: 17, type: "Size", strength: 3, image: "images/17.jpg", question: "النقاط المركزية لها أحجام مختلفة، صحيح أم خطأ؟", correctAnswer: "False", explanation: "يعتمد إدراك الحجم على السياق. النقاط المركزية متساوية." },
-            { id: 18, type: "Geometric", strength: 3, image: "images/18.jpg", question: "الخطوط الطويلة متوازية مع بعضها البعض، صحيح أم خطأ؟", correctAnswer: "True", explanation: "وهم زولنر: النمط المحيط بالخطوط المتوازية يخلق وهماً بأن الخطوط ليست متوازية." },
-            { id: 19, type: "Size", strength: 2, image: "images/19.jpg", question: "هاتين الدائرتين لهما نفس الحجم، صحيح أم خطأ؟", correctAnswer: "False", explanation: "قد يجعل الترابط بينهما يبدو وكأنهما بنفس الحجم، لكن الحجم الصحيح أكبر." },
-            { id: 20, type: "Geometric", strength: 3, image: "images/20.jpg", question: "الخطوط الحمراء منحنية إلى الخارج، صحيح أم خطأ؟", correctAnswer: "False", explanation: "وهم هيرينغ: الخطوط الحمراء مستقيمة، لكن الخطوط الزرقاء تجعلها تبدو منحنية." },
-            { id: 21, type: "Size", strength: 2, image: "images/21.jpg", question: "السيارتين لهما نفس الحجم، صحيح أم خطأ؟", correctAnswer: "False", explanation: "السيارة التي في الأمام أصغر قليلاً من السيارة التي في الخلف." },
-            { id: 22, type: "Size", strength: 1, image: "images/22.jpg", question: "الجرو الموجود على اليمين أكبر قليلاً من الجرو الموجود على اليسار، صحيح أم خطأ؟", correctAnswer: "True", explanation: "الجرو على اليمين أكبر فعلاً." },
-            { id: 23, type: "Size", strength: 2, image: "images/23.jpg", question: "هذين الكوبين القهوة لهما نفس الحجم، صحيح أم خطأ؟", correctAnswer: "True", explanation: "أكواب القهوة بنفس الحجم." },
-            { id: 24, type: "Size", strength: 3, image: "images/24.jpg", question: "حجم القمر أكبر على يسار الصفحة منه على اليمين، صحيح أم خطأ؟", correctAnswer: "False", explanation: "وهم القمر: يبدو القمر أكبر عند الأفق، لكنهما متساويان في الحجم." },
-            { id: 25, type: "Depth", strength: 2, image: "images/25.jpg", question: "أقرب عملة هي العشرة سنتات، صحيح أم خطأ؟", correctAnswer: "True", explanation: "الأشياء المألوفة لها أحجام مُحددة مسبقًا، مما يؤثر على إدراكنا للعمق." },
-            { id: 26, type: "Size", strength: 3, image: "images/26.jpg", question: "هذين الطبقين من الطعام لهما نفس الحجم، صحيح أم خطأ؟", correctAnswer: "True", explanation: "الطبق الفارغ مقابل الممتلئ يخدع العين، لكنهما بنفس الحجم." },
-            { id: 27, type: "Size", strength: 2, image: "images/27.jpg", question: "أجهزة الكمبيوتر المحمولة لها نفس الحجم تمامًا، صحيح أم خطأ؟", correctAnswer: "True", explanation: "نعم، الجهازان متطابقان في الحجم." },
-            { id: 28, type: "Color", strength: 3, image: "images/28.jpg", question: "المساحة داخل المستطيل الكبير، والمساحة داخل المستطيلات الأصغر لها نفس اللون، صحيح أم خطأ؟", correctAnswer: "True", explanation: "خداع الألوان المائية: يلاحظ معظم الناس لونًا أصفر باهتًا، لكن اللون أبيض في الجميع." },
-            { id: 29, type: "Geometric", strength: 3, image: "images/29.jpg", question: "البرج الأيمن يميل أكثر من البرج الأيسر، صح أم خطأ؟", correctAnswer: "False", explanation: "وهم برج الميلان: الصورتان متطابقتان تماماً!" },
-            { id: 30, type: "Size", strength: 3, image: "images/30.jpg", question: "هذه الفيلة لها ثلاثة أحجام مختلفة، صحيح أم خطأ؟", correctAnswer: "False", explanation: "تختلف أحجام الأفيال من زاوية إلى أخرى، لكنها في الواقع متساوية." }
-        ];
-
-        let currentTrial = 0;
-        let participantData = {};
-        let displayTime = 0;
-
-        function startTest() {
-            const pName = document.getElementById('p-name').value.trim();
-            const pClass = document.getElementById('p-class').value;
-            const pGender = document.getElementById('p-gender').value;
-
-            if (!pName || !pClass || !pGender) {
-                alert("الرجاء تعبئة جميع البيانات (الاسم، الصف، والجنس)");
-                return;
-            }
-
-            // حفظ البيانات
-            participantData = { id: pName, age: pClass, gender: pGender };
-            
-            document.getElementById('start-screen').classList.add('hidden');
-            document.getElementById('test-screen').classList.remove('hidden');
-            loadTrial();
-        }
-
-        function loadTrial() {
-            if (currentTrial >= illusions.length) {
-                finishTest();
-                return;
-            }
-
-            const trial = illusions[currentTrial];
-            document.getElementById('question-text').textContent = trial.question;
-            document.getElementById('illusion-img').src = trial.image;
-            document.getElementById('illusion-type-display').textContent = trial.type;
-            document.getElementById('progress').textContent = `السؤال ${currentTrial + 1} من ${illusions.length}`;
-            displayTime = Date.now();
-        }
-
-        function submitAnswer(userAnswer) {
-            const clickTime = Date.now();
-            const trial = illusions[currentTrial];
-
-            const reactionTimeMs = clickTime - displayTime;
-            const isCorrect = (userAnswer === trial.correctAnswer) ? 1 : 0;
-
-            let susceptibilityScore;
-            if (isCorrect === 0) {
-                susceptibilityScore = reactionTimeMs * trial.strength;
-            } else {
-                susceptibilityScore = reactionTimeMs * 0.5;
-            }
-
-            // =======================================================
-            //  تم اعتماد إرسال 10 أعمدة فقط بالمتغيرات الجديدة
-            // =======================================================
-            const dataToSend = {
-                student_name: participantData.id,    // الاسم
-                student_class: participantData.age,  // الصف
-                gender: participantData.gender,      // الجنس
-                illusion_type: trial.type,           // نوع الوهم
-                illusion_strength: trial.strength,   // قوة الوهم
-                answer: userAnswer,                  // إجابة الطالب
-                correct_answer: trial.correctAnswer, // الإجابة الصحيحة
-                is_correct: isCorrect,               // النتيجة (0/1)
-                reaction_time: reactionTimeMs,       // زمن الاستجابة
-                susceptibility_score: susceptibilityScore // مؤشر الانخداع
-            };
-
-            fetch(GOOGLE_SCRIPT_URL, {
-                method: "POST",
-                mode: "no-cors",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(dataToSend)
-            }).catch(err => console.error("Error sending data", err));
-
-            showFeedback(isCorrect, trial.explanation);
-        }
-
-        function showFeedback(isCorrect, explanationText) {
-            const modal = document.getElementById('feedback-modal');
-            const title = document.getElementById('feedback-title');
-            const text = document.getElementById('feedback-explanation');
-
-            if (isCorrect) {
-                title.textContent = "✅ إجابة صحيحة";
-                title.style.color = "#27ae60";
-            } else {
-                title.textContent = "❌ انخدعت بالوهم!";
-                title.style.color = "#c0392b";
-            }
-
-            text.innerHTML = `<strong>التفسير العلمي:</strong><br>${explanationText}`;
-            modal.style.display = 'flex';
-        }
-
-        function nextTrial() {
-            document.getElementById('feedback-modal').style.display = 'none';
-            currentTrial++;
-            loadTrial();
-        }
-
-        function finishTest() {
-            document.getElementById('test-screen').classList.add('hidden');
-            document.getElementById('end-screen').classList.remove('hidden');
-        }
-    </script>
-</body>
-</html>
+</div>
