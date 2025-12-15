@@ -2,241 +2,248 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>اختبار الوهم البصري (Ponzo Illusion)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مقياس الاستجابة الإدراكية للأوهام البصرية</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap');
 
         body {
             font-family: 'Tajawal', sans-serif;
-            background-color: #f0f2f5;
-            color: #333;
+            background-color: #f4f6f9;
             margin: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            user-select: none;
-        }
-
-        .container {
-            width: 95%;
-            max-width: 600px;
-            text-align: center;
             padding: 20px;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            margin-top: 20px;
-        }
-
-        h1 { color: #2c3e50; margin-bottom: 10px; }
-
-        .img-box {
-            width: 100%;
-            height: 300px;
-            background-color: #ddd;
-            margin: 20px 0;
             display: flex;
             justify-content: center;
             align-items: center;
-            border-radius: 10px;
-            overflow: hidden;
-            position: relative;
+            min-height: 100vh;
+            text-align: center;
+            color: #333;
         }
 
-        .img-box img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            width: 100%;
+            max-width: 750px;
+        }
+
+        h1, h2 { color: #2c3e50; margin-bottom: 20px; }
+        
+        input, select {
+            padding: 12px;
+            width: 70%;
+            margin: 10px 0;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-family: 'Tajawal';
+            font-size: 16px;
+            text-align: center;
         }
 
         .btn {
             background: #3498db;
             color: white;
-            padding: 15px 30px;
             border: none;
+            padding: 15px 40px;
             border-radius: 8px;
-            font-size: 20px;
             cursor: pointer;
-            margin: 10px;
-            width: 40%;
-            font-family: 'Tajawal';
-            font-weight: bold;
-            transition: 0.2s;
-        }
-
-        .btn:active { transform: scale(0.95); }
-        .btn-start { width: 80%; background: #27ae60; }
-        
-        input {
-            padding: 15px;
-            width: 70%;
-            border: 2px solid #ddd;
-            border-radius: 8px;
             font-size: 18px;
-            text-align: center;
+            margin: 10px;
             font-family: 'Tajawal';
-            margin-bottom: 15px;
+            transition: transform 0.2s, background 0.3s;
         }
 
-        .hidden { display: none !important; }
+        .btn:hover { background: #2980b9; transform: scale(1.02); }
+        .btn-true { background: #27ae60; width: 45%; } 
+        .btn-true:hover { background: #219150; }
+        .btn-false { background: #c0392b; width: 45%; } 
+        .btn-false:hover { background: #a93226; }
 
-        /* تنسيق شريط التقدم */
-        .progress-bar {
-            width: 100%;
-            height: 10px;
-            background: #e0e0e0;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            overflow: hidden;
-        }
-        .progress-fill {
-            height: 100%;
-            background: #3498db;
-            width: 0%;
-            transition: width 0.3s ease;
+        #illusion-img {
+            max-width: 100%;
+            height: auto;
+            max-height: 450px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 1px solid #ddd;
         }
 
+        .hidden { display: none; }
+        
+        .top-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            color: #7f8c8d;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
     </style>
 </head>
 <body>
 
     <div id="start-screen" class="container">
-        <h1>اختبار الوهم البصري</h1>
-        <p>في هذا الاختبار ستشاهد صوراً تحتوي على خطين.</p>
-        <p>المطلوب منك تحديد: <strong>أي الخطين أطول؟</strong></p>
-        <p>أجب بناءً على ما تراه عيناك، حتى لو شعرت أنهما متساويان.</p>
+        <h1>مقياس الإدراك البصري</h1>
+        <p>الرجاء إدخال البيانات لبدء الاختبار:</p>
         
-        <input type="text" id="student-name" placeholder="اكتب اسمك الثلاثي هنا">
-        <br>
-        <button class="btn btn-start" onclick="startTest()">ابدأ الاختبار</button>
+        <input type="text" id="p-name" placeholder="اسم الطالب الثلاثي">
+        <input type="text" id="p-class" placeholder="الصف (مثلاً: الخامس أ)">
+        
+        <select id="p-gender">
+            <option value="">اختر الجنس</option>
+            <option value="Male">ذكر</option>
+            <option value="Female">أنثى</option>
+        </select>
+        <br><br>
+        <button class="btn" onclick="startTest()">بدء الاختبار</button>
     </div>
 
     <div id="test-screen" class="container hidden">
-        <div class="progress-bar"><div id="progress" class="progress-fill"></div></div>
-        
-        <h2 id="question-text">أي الخطين أطول؟</h2>
-        
-        <div class="img-box">
-            <img id="test-image" src="" alt="illusion">
+        <div class="top-info">
+            <span id="progress">سؤال 1 من 30</span>
+            <span>النوع: <span id="illusion-type-display" style="font-weight:bold;">Geometric</span></span>
         </div>
 
-        <div>
-            <button class="btn" onclick="answerQuestion('top')">الخط العلوي (2)</button>
-            <button class="btn" onclick="answerQuestion('bottom')">الخط السفلي (4)</button>
+        <h2 id="question-text">السؤال يظهر هنا</h2>
+        <img id="illusion-img" src="" alt="Illusion Image">
+
+        <div id="answer-buttons">
+            <button class="btn btn-true" onclick="submitAnswer('True')">نعم (True)</button>
+            <button class="btn btn-false" onclick="submitAnswer('False')">لا (False)</button>
         </div>
     </div>
 
     <div id="end-screen" class="container hidden">
-        <h1 style="color:#27ae60">تم الانتهاء!</h1>
-        <p>شكراً لك لإكمال الاختبار.</p>
-        <hr>
-        <div id="sending-msg" style="color:#e67e22; font-weight:bold;">جاري حفظ النتائج...</div>
-        <button class="btn btn-start" onclick="location.reload()" style="background:#7f8c8d; margin-top:20px;">طالب جديد</button>
+        <h1 style="color:green;">انتهت التجربة</h1>
+        <p>تم تسجيل جميع البيانات بنجاح.</p>
+        <br>
+        <button class="btn" onclick="location.reload()">تسجيل طالب جديد</button>
     </div>
 
     <script>
         // ==========================================
-        //  رابط السكربت (Google Apps Script URL)
-        //  ضع رابطك هنا إذا كان مختلفاً
+        //  رابط السكربت الخاص بك
         // ==========================================
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwbCrZKaEWWAfFy3csc-fUzfJv4CzjqEYRY1dC60rpscTe65CffuyA25ViS207AtaRS/exec"; 
-        // ==========================================
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzp1DNBLO-QlvAb5CtzoNNa1G0BojonaTHgSN9EVGgTpQxl6RW1os1k2Azz0nYdJs4R/exec"; 
 
-        // قائمة الأسئلة (صور بونزو)
-        // images: ضع روابط الصور الحقيقية هنا لاحقاً
-        const questions = [
-            { id: 1, img: "https://upload.wikimedia.org/wikipedia/commons/2/2a/Ponzo_illusion.gif", type: "illusion" },
-            { id: 2, img: "https://upload.wikimedia.org/wikipedia/commons/2/2a/Ponzo_illusion.gif", type: "illusion" },
-            { id: 3, img: "https://upload.wikimedia.org/wikipedia/commons/2/2a/Ponzo_illusion.gif", type: "control" }, // سؤال تحكم (بدون خداع)
-            { id: 4, img: "https://upload.wikimedia.org/wikipedia/commons/2/2a/Ponzo_illusion.gif", type: "illusion" },
-            { id: 5, img: "https://upload.wikimedia.org/wikipedia/commons/2/2a/Ponzo_illusion.gif", type: "illusion" }
+        // مصفوفة الأسئلة (30 سؤال)
+        const illusions = [
+            { id: 1, type: "Color", strength: 2, image: "images/1.jpg", question: "المجلد الأزرق الفاتح أكبر من المجلد الأسود، صحيح أم خطأ؟", correctAnswer: "True" },
+            { id: 2, type: "Contrast", strength: 3, image: "images/2.jpg", question: "المربع الصغير على اليسار هو ظل أفتح من المربع الموجود على اليمين، صحيح أم خطأ؟", correctAnswer: "False" },
+            { id: 3, type: "Geometric", strength: 2, image: "images/3.jpg", question: "القلم الرصاص أطول من قلم الحبر صحيح أم خطأ؟", correctAnswer: "False" },
+            { id: 4, type: "Size", strength: 2, image: "images/4.jpg", question: "الحصان الذي على اليمين أصغر من الحصان الذي على اليسار، صحيح أم خطأ؟", correctAnswer: "True" },
+            { id: 5, type: "Geometric", strength: 3, image: "images/5.jpg", question: "الخطوط الحمراء لها نفس الطول، صحيح أم خطأ؟", correctAnswer: "True" },
+            { id: 6, type: "Size", strength: 2, image: "images/6.jpg", question: "الدب على اليسار أكبر من الدب على اليمين، صحيح أم خطأ؟", correctAnswer: "False" },
+            { id: 7, type: "Size", strength: 2, image: "images/7.jpg", question: "هاتين البرتقالتين لهما نفس الحجم، صحيح أم خطأ؟", correctAnswer: "False" },
+            { id: 8, type: "Geometric", strength: 3, image: "images/8.jpg", question: "الخط العمودي أطول من الخط الأفقي، صحيح أم خطأ؟", correctAnswer: "False" },
+            { id: 9, type: "Size", strength: 1, image: "images/9.jpg", question: "قطعة الحلوى الموجودة على اليسار أكبر، صحيح أم خطأ؟", correctAnswer: "True" },
+            { id: 10, type: "Geometric", strength: 3, image: "images/10.jpg", question: "هذه الخطوط الأفقية ليست مائلة، صحيح أم خطأ؟", correctAnswer: "True" },
+            { id: 11, type: "Geometric", strength: 3, image: "images/11.jpg", question: "هذه الخطوط لها نفس الطول، صحيح أم خطأ؟", correctAnswer: "True" },
+            { id: 12, type: "Geometric", strength: 3, image: "images/12.jpg", question: "الخط B أطول، صحيح أم خطأ؟", correctAnswer: "False" },
+            { id: 13, type: "Contrast", strength: 3, image: "images/13.jpg", question: "كل المستطيلات الداخلية لها نفس الحجم، صحيح أم خطأ؟", correctAnswer: "True" },
+            { id: 14, type: "Size", strength: 2, image: "images/14.jpg", question: "من بين البيتين، الذي على اليسار هو الأصغر، صحيح أم خطأ؟", correctAnswer: "True" },
+            { id: 15, type: "Size", strength: 3, image: "images/15.jpg", question: "هاتين القبعتين لهما نفس الحجم تمامًا، صحيح أم خطأ؟", correctAnswer: "True" },
+            { id: 16, type: "Size", strength: 2, image: "images/16.jpg", question: "الخنزير في الوسط هو الأصغر، صحيح أم خطأ؟", correctAnswer: "False" },
+            { id: 17, type: "Size", strength: 3, image: "images/17.jpg", question: "النقاط المركزية لها أحجام مختلفة، صحيح أم خطأ؟", correctAnswer: "False" },
+            { id: 18, type: "Geometric", strength: 3, image: "images/18.jpg", question: "الخطوط الطويلة متوازية مع بعضها البعض، صحيح أم خطأ؟", correctAnswer: "True" },
+            { id: 19, type: "Size", strength: 2, image: "images/19.jpg", question: "هاتين الدائرتين لهما نفس الحجم، صحيح أم خطأ؟", correctAnswer: "False" },
+            { id: 20, type: "Geometric", strength: 3, image: "images/20.jpg", question: "الخطوط الحمراء منحنية إلى الخارج، صحيح أم خطأ؟", correctAnswer: "False" },
+            { id: 21, type: "Size", strength: 2, image: "images/21.jpg", question: "السيارتين لهما نفس الحجم، صحيح أم خطأ؟", correctAnswer: "False" },
+            { id: 22, type: "Size", strength: 1, image: "images/22.jpg", question: "الجرو الموجود على اليمين أكبر قليلاً من الجرو الموجود على اليسار، صحيح أم خطأ؟", correctAnswer: "True" },
+            { id: 23, type: "Size", strength: 2, image: "images/23.jpg", question: "هذين الكوبين القهوة لهما نفس الحجم، صحيح أم خطأ؟", correctAnswer: "True" },
+            { id: 24, type: "Size", strength: 3, image: "images/24.jpg", question: "حجم القمر أكبر على يسار الصفحة منه على اليمين، صحيح أم خطأ؟", correctAnswer: "False" },
+            { id: 25, type: "Depth", strength: 2, image: "images/25.jpg", question: "أقرب عملة هي العشرة سنتات، صحيح أم خطأ؟", correctAnswer: "True" },
+            { id: 26, type: "Size", strength: 3, image: "images/26.jpg", question: "هذين الطبقين من الطعام لهما نفس الحجم، صحيح أم خطأ؟", correctAnswer: "True" },
+            { id: 27, type: "Size", strength: 2, image: "images/27.jpg", question: "أجهزة الكمبيوتر المحمولة لها نفس الحجم تمامًا، صحيح أم خطأ؟", correctAnswer: "True" },
+            { id: 28, type: "Color", strength: 3, image: "images/28.jpg", question: "المساحة داخل المستطيل الكبير، والمساحة داخل المستطيلات الأصغر لها نفس اللون، صحيح أم خطأ؟", correctAnswer: "True" },
+            { id: 29, type: "Geometric", strength: 3, image: "images/29.jpg", question: "البرج الأيمن يميل أكثر من البرج الأيسر، صح أم خطأ؟", correctAnswer: "False" },
+            { id: 30, type: "Size", strength: 3, image: "images/30.jpg", question: "هذه الفيلة لها ثلاثة أحجام مختلفة، صحيح أم خطأ؟", correctAnswer: "False" }
         ];
 
-        let currentQIndex = 0;
-        let studentName = "";
-        let results = {
-            illusionCount: 0, // عدد مرات الوقوع في الوهم
-            totalIllusionQs: 0 // عدد أسئلة الوهم الكلي
-        };
+        let currentTrial = 0;
+        let participantData = {};
+        let displayTime = 0;
 
         function startTest() {
-            const name = document.getElementById('student-name').value.trim();
-            if (!name) { alert("الرجاء كتابة الاسم"); return; }
-            studentName = name;
+            const pName = document.getElementById('p-name').value.trim();
+            const pClass = document.getElementById('p-class').value;
+            const pGender = document.getElementById('p-gender').value;
 
+            if (!pName || !pClass || !pGender) {
+                alert("الرجاء تعبئة جميع البيانات (الاسم، الصف، والجنس)");
+                return;
+            }
+
+            participantData = { id: pName, age: pClass, gender: pGender };
+            
             document.getElementById('start-screen').classList.add('hidden');
             document.getElementById('test-screen').classList.remove('hidden');
-            
-            showQuestion();
+            loadTrial();
         }
 
-        function showQuestion() {
-            if (currentQIndex >= questions.length) {
+        function loadTrial() {
+            if (currentTrial >= illusions.length) {
                 finishTest();
                 return;
             }
 
-            // تحديث شريط التقدم
-            const progress = ((currentQIndex) / questions.length) * 100;
-            document.getElementById('progress').style.width = progress + "%";
-
-            // عرض الصورة
-            const q = questions[currentQIndex];
-            document.getElementById('test-image').src = q.img;
+            const trial = illusions[currentTrial];
+            document.getElementById('question-text').textContent = trial.question;
+            document.getElementById('illusion-img').src = trial.image;
+            document.getElementById('illusion-type-display').textContent = trial.type;
+            document.getElementById('progress').textContent = `سؤال ${currentTrial + 1} من ${illusions.length}`;
+            displayTime = Date.now();
         }
 
-        function answerQuestion(choice) {
-            // منطق تسجيل الإجابة (داخلياً فقط)
-            const q = questions[currentQIndex];
-            
-            // في خدعة بونزو: الخط العلوي يبدو أطول لكنهما متساويان
-            // إذا اختار "العلوي" (top) في سؤال خداع، فقد وقع في الوهم
-            if (q.type === "illusion") {
-                results.totalIllusionQs++;
-                if (choice === 'top') {
-                    results.illusionCount++;
-                }
+        function submitAnswer(userAnswer) {
+            const clickTime = Date.now();
+            const trial = illusions[currentTrial];
+
+            const reactionTimeMs = clickTime - displayTime;
+            const isCorrect = (userAnswer === trial.correctAnswer) ? 1 : 0;
+
+            let susceptibilityScore;
+            if (isCorrect === 0) {
+                susceptibilityScore = reactionTimeMs * trial.strength;
+            } else {
+                susceptibilityScore = reactionTimeMs * 0.5;
             }
 
-            // --- التعديل هنا: الانتقال فوراً للسؤال التالي بدون تعليل ---
-            currentQIndex++;
-            showQuestion(); 
+            const dataToSend = {
+                student_name: participantData.id,
+                student_class: participantData.age,
+                gender: participantData.gender,
+                illusion_type: trial.type,
+                illusion_strength: trial.strength,
+                answer: userAnswer,
+                correct_answer: trial.correctAnswer,
+                is_correct: isCorrect,
+                reaction_time: reactionTimeMs,
+                susceptibility_score: susceptibilityScore
+            };
+
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: "POST",
+                mode: "no-cors",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(dataToSend)
+            }).catch(err => console.error("Error sending data", err));
+
+            // التعديل هنا: الانتقال المباشر للسؤال التالي بدون عرض التعليل
+            nextTrial();
+        }
+
+        function nextTrial() {
+            currentTrial++;
+            loadTrial();
         }
 
         function finishTest() {
             document.getElementById('test-screen').classList.add('hidden');
             document.getElementById('end-screen').classList.remove('hidden');
-            document.getElementById('progress').style.width = "100%";
-
-            // تجهيز البيانات للإرسال
-            const illusionPercentage = Math.round((results.illusionCount / results.totalIllusionQs) * 100);
-            
-            let interpretation = "";
-            if (illusionPercentage > 50) interpretation = "تأثر قوي بالوهم البصري";
-            else interpretation = "إدراك بصري دقيق (تأثر منخفض)";
-
-            const dataToSend = {
-                student_name: studentName,
-                test_type: "Optical Illusion",
-                score: illusionPercentage + "%", // نسبة التأثر
-                details: `وقع في الوهم ${results.illusionCount} من ${results.totalIllusionQs}`,
-                interpretation: interpretation
-            };
-
-            // إرسال البيانات
-            fetch(SCRIPT_URL, {
-                method: "POST",
-                mode: "no-cors",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(dataToSend)
-            }).then(() => {
-                document.getElementById('sending-msg').textContent = "✅ تم حفظ النتائج بنجاح!";
-                document.getElementById('sending-msg').style.color = "#27ae60";
-            }).catch(e => {
-                document.getElementById('sending-msg').textContent = "⚠️ حدث خطأ في الشبكة، لكن تم إكمال الاختبار.";
-            });
         }
     </script>
 </body>
