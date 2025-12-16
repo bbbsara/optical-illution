@@ -12,12 +12,12 @@
             padding: 0;
             font-family: 'Tajawal', sans-serif;
             height: 100vh;
-            overflow: hidden; /* لمنع ظهور شريط التمرير مع الخلفية المتحركة */
+            overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
             color: white;
-            /* خلفية الضباب المتحرك (Illusion Fog) */
+            /* خلفية الضباب المتحرك */
             background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #000000);
             background-size: 400% 400%;
             animation: fogAnimation 15s ease infinite;
@@ -31,8 +31,8 @@
 
         /* حاوية الزجاج (Glassmorphism) */
         .glass-container {
-            background: rgba(255, 255, 255, 0.1); /* شفافية */
-            backdrop-filter: blur(15px); /* تمويه الخلفية */
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             padding: 30px;
@@ -43,7 +43,7 @@
             text-align: center;
             transition: transform 0.3s ease;
             max-height: 90vh;
-            overflow-y: auto; /* للسماح بالتمرير إذا كان المحتوى طويلاً */
+            overflow-y: auto;
         }
 
         h1 {
@@ -84,10 +84,9 @@
         }
         
         select option {
-            background: #2c3e50; /* لون خلفية القائمة المنسدلة */
+            background: #2c3e50;
         }
 
-        /* الأزرار */
         .btn {
             padding: 12px 40px;
             font-size: 1.2rem;
@@ -114,7 +113,6 @@
         .btn-false { background: linear-gradient(90deg, #cb2d3e, #ef473a); width: 40%; }
         .btn-false:hover { transform: translateY(-3px); box-shadow: 0 0 15px rgba(239, 71, 58, 0.6); }
 
-        /* منطقة الصورة */
         #illusion-img {
             max-width: 100%;
             height: auto;
@@ -137,7 +135,6 @@
 
         .hidden { display: none !important; }
         
-        /* تحسين التمرير (Scrollbar) */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); }
         ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
@@ -151,7 +148,7 @@
         <div class="description-box">
             <h3>تعليمات الأداء:</h3>
             <p>
-                مرحباً بك في تجربة قياس الإدراك البصري.<br>
+                مرحباً بك في تجربة قياس <strong>الوهم</strong> البصري.<br>
                 1. ستظهر لك صور تحتوي على أشكال هندسية أو رسومات خداع بصري.<br>
                 2. سيتم طرح سؤال محدد حول الصورة (مثلاً: أيهما أكبر؟).<br>
                 3. أجب بـ <strong>"نعم"</strong> أو <strong>"لا"</strong> بأسرع ما يمكن وبدقة.<br>
@@ -195,12 +192,9 @@
     </div>
 
     <script>
-        // ==========================================
-        //  رابط السكربت الخاص بك
-        // ==========================================
+        // رابط السكربت الخاص باختبار الوهم البصري
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzp1DNBLO-QlvAb5CtzoNNa1G0BojonaTHgSN9EVGgTpQxl6RW1os1k2Azz0nYdJs4R/exec"; 
 
-        // مصفوفة الأسئلة (30 سؤال) - كما هي
         const illusions = [
             { id: 1, type: "Color", strength: 2, image: "images/1.jpg", question: "المجلد الأزرق الفاتح أكبر من المجلد الأسود، صحيح أم خطأ؟", correctAnswer: "True" },
             { id: 2, type: "Contrast", strength: 3, image: "images/2.jpg", question: "المربع الصغير على اليسار هو ظل أفتح من المربع الموجود على اليمين، صحيح أم خطأ؟", correctAnswer: "False" },
@@ -267,7 +261,6 @@
             document.getElementById('illusion-type-display').textContent = trial.type;
             document.getElementById('progress').textContent = `سؤال ${currentTrial + 1} من ${illusions.length}`;
             
-            // التأكد من تحميل الصورة قبل بدء المؤقت (اختياري، لكن يفضل لضمان الدقة)
             displayTime = Date.now();
         }
 
@@ -279,7 +272,6 @@
             const isCorrect = (userAnswer === trial.correctAnswer) ? 1 : 0;
 
             let susceptibilityScore;
-            // منطق حساب درجة الحساسية للوهم كما طلبت في الكود السابق
             if (isCorrect === 0) {
                 susceptibilityScore = reactionTimeMs * trial.strength;
             } else {
