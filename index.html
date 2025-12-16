@@ -3,111 +3,181 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مقياس الاستجابة الإدراكية للأوهام البصرية</title>
+    <title>اختبار الوهم البصري</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;500;800&display=swap');
 
         body {
-            font-family: 'Tajawal', sans-serif;
-            background-color: #f4f6f9;
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            font-family: 'Tajawal', sans-serif;
+            height: 100vh;
+            overflow: hidden; /* لمنع ظهور شريط التمرير مع الخلفية المتحركة */
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
+            color: white;
+            /* خلفية الضباب المتحرك (Illusion Fog) */
+            background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #000000);
+            background-size: 400% 400%;
+            animation: fogAnimation 15s ease infinite;
+        }
+
+        @keyframes fogAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* حاوية الزجاج (Glassmorphism) */
+        .glass-container {
+            background: rgba(255, 255, 255, 0.1); /* شفافية */
+            backdrop-filter: blur(15px); /* تمويه الخلفية */
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+            width: 90%;
+            max-width: 700px;
             text-align: center;
-            color: #333;
+            transition: transform 0.3s ease;
+            max-height: 90vh;
+            overflow-y: auto; /* للسماح بالتمرير إذا كان المحتوى طويلاً */
         }
 
-        .container {
-            background: white;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-            width: 100%;
-            max-width: 750px;
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+            color: #fff;
         }
 
-        h1, h2 { color: #2c3e50; margin-bottom: 20px; }
-        
+        .description-box {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: right;
+            line-height: 1.6;
+            font-size: 1rem;
+            color: #ddd;
+            border-right: 4px solid #00d2ff;
+        }
+
         input, select {
-            padding: 12px;
             width: 70%;
+            padding: 12px;
             margin: 10px 0;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
             font-family: 'Tajawal';
-            font-size: 16px;
+            font-size: 1.1rem;
             text-align: center;
+            outline: none;
         }
 
+        input::placeholder, select option {
+            color: #ccc;
+        }
+        
+        select option {
+            background: #2c3e50; /* لون خلفية القائمة المنسدلة */
+        }
+
+        /* الأزرار */
         .btn {
-            background: #3498db;
+            padding: 12px 40px;
+            font-size: 1.2rem;
+            font-family: 'Tajawal';
+            font-weight: bold;
             color: white;
             border: none;
-            padding: 15px 40px;
-            border-radius: 8px;
+            border-radius: 50px;
             cursor: pointer;
-            font-size: 18px;
+            transition: all 0.3s ease;
             margin: 10px;
-            font-family: 'Tajawal';
-            transition: transform 0.2s, background 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
 
-        .btn:hover { background: #2980b9; transform: scale(1.02); }
-        .btn-true { background: #27ae60; width: 45%; } 
-        .btn-true:hover { background: #219150; }
-        .btn-false { background: #c0392b; width: 45%; } 
-        .btn-false:hover { background: #a93226; }
+        .btn-start {
+            background: linear-gradient(90deg, #00d2ff 0%, #3a7bd5 100%);
+            width: 60%;
+        }
+        .btn-start:hover { transform: scale(1.05); box-shadow: 0 0 20px rgba(0, 210, 255, 0.6); }
 
+        .btn-true { background: linear-gradient(90deg, #11998e, #38ef7d); width: 40%; }
+        .btn-true:hover { transform: translateY(-3px); box-shadow: 0 0 15px rgba(56, 239, 125, 0.6); }
+
+        .btn-false { background: linear-gradient(90deg, #cb2d3e, #ef473a); width: 40%; }
+        .btn-false:hover { transform: translateY(-3px); box-shadow: 0 0 15px rgba(239, 71, 58, 0.6); }
+
+        /* منطقة الصورة */
         #illusion-img {
             max-width: 100%;
             height: auto;
-            max-height: 450px;
+            max-height: 350px;
             border-radius: 10px;
-            margin: 20px 0;
-            border: 1px solid #ddd;
+            margin: 15px 0;
+            border: 2px solid rgba(255,255,255,0.2);
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
         }
 
-        .hidden { display: none; }
-        
         .top-info {
             display: flex;
             justify-content: space-between;
-            font-size: 14px;
-            color: #7f8c8d;
+            font-size: 0.9rem;
+            color: #aaa;
             margin-bottom: 10px;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
             padding-bottom: 10px;
         }
+
+        .hidden { display: none !important; }
+        
+        /* تحسين التمرير (Scrollbar) */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
     </style>
 </head>
 <body>
 
-    <div id="start-screen" class="container">
-        <h1>مقياس الإدراك البصري</h1>
-        <p>الرجاء إدخال البيانات لبدء الاختبار:</p>
+    <div id="start-screen" class="glass-container">
+        <h1>اختبار الوهم البصري</h1>
         
-        <input type="text" id="p-name" placeholder="اسم الطالب الثلاثي">
-        <input type="text" id="p-class" placeholder="الصف (مثلاً: الخامس أ)">
-        
+        <div class="description-box">
+            <h3>تعليمات الأداء:</h3>
+            <p>
+                مرحباً بك في تجربة قياس الإدراك البصري.<br>
+                1. ستظهر لك صور تحتوي على أشكال هندسية أو رسومات خداع بصري.<br>
+                2. سيتم طرح سؤال محدد حول الصورة (مثلاً: أيهما أكبر؟).<br>
+                3. أجب بـ <strong>"نعم"</strong> أو <strong>"لا"</strong> بأسرع ما يمكن وبدقة.<br>
+                4. لا تستغرق وقتاً طويلاً في التفكير، اعتمد على انطباعك الأول.
+            </p>
+        </div>
+
+        <input type="text" id="p-name" placeholder="اسم الطالب الثلاثي" autocomplete="off">
+        <input type="text" id="p-class" placeholder="الصف (مثلاً: الخامس أ)" autocomplete="off">
         <select id="p-gender">
             <option value="">اختر الجنس</option>
             <option value="Male">ذكر</option>
             <option value="Female">أنثى</option>
         </select>
         <br><br>
-        <button class="btn" onclick="startTest()">بدء الاختبار</button>
+        <button class="btn btn-start" onclick="startTest()">ابدأ الاختبار</button>
     </div>
 
-    <div id="test-screen" class="container hidden">
+    <div id="test-screen" class="glass-container hidden">
         <div class="top-info">
             <span id="progress">سؤال 1 من 30</span>
-            <span>النوع: <span id="illusion-type-display" style="font-weight:bold;">Geometric</span></span>
+            <span>النوع: <span id="illusion-type-display" style="color:#00d2ff; font-weight:bold;">Geometric</span></span>
         </div>
 
-        <h2 id="question-text">السؤال يظهر هنا</h2>
+        <h2 id="question-text" style="font-size: 1.5rem; min-height: 60px;">السؤال يظهر هنا</h2>
+        
         <img id="illusion-img" src="" alt="Illusion Image">
 
         <div id="answer-buttons">
@@ -116,11 +186,12 @@
         </div>
     </div>
 
-    <div id="end-screen" class="container hidden">
-        <h1 style="color:green;">انتهت التجربة</h1>
-        <p>تم تسجيل جميع البيانات بنجاح.</p>
+    <div id="end-screen" class="glass-container hidden">
+        <h1 style="color:#38ef7d; text-shadow: 0 0 20px rgba(56, 239, 125, 0.4);">انتهت التجربة</h1>
+        <p style="font-size: 1.2rem;">تم تسجيل استجابتك بنجاح.</p>
+        <p style="color:#aaa;">شكراً لمشاركتك في هذا الاختبار.</p>
         <br>
-        <button class="btn" onclick="location.reload()">تسجيل طالب جديد</button>
+        <button class="btn btn-start" onclick="location.reload()">تسجيل طالب جديد</button>
     </div>
 
     <script>
@@ -129,7 +200,7 @@
         // ==========================================
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzp1DNBLO-QlvAb5CtzoNNa1G0BojonaTHgSN9EVGgTpQxl6RW1os1k2Azz0nYdJs4R/exec"; 
 
-        // مصفوفة الأسئلة (30 سؤال)
+        // مصفوفة الأسئلة (30 سؤال) - كما هي
         const illusions = [
             { id: 1, type: "Color", strength: 2, image: "images/1.jpg", question: "المجلد الأزرق الفاتح أكبر من المجلد الأسود، صحيح أم خطأ؟", correctAnswer: "True" },
             { id: 2, type: "Contrast", strength: 3, image: "images/2.jpg", question: "المربع الصغير على اليسار هو ظل أفتح من المربع الموجود على اليمين، صحيح أم خطأ؟", correctAnswer: "False" },
@@ -173,7 +244,7 @@
             const pGender = document.getElementById('p-gender').value;
 
             if (!pName || !pClass || !pGender) {
-                alert("الرجاء تعبئة جميع البيانات (الاسم، الصف، والجنس)");
+                alert("الرجاء تعبئة جميع البيانات (الاسم، الصف، والجنس) للبدء.");
                 return;
             }
 
@@ -195,6 +266,8 @@
             document.getElementById('illusion-img').src = trial.image;
             document.getElementById('illusion-type-display').textContent = trial.type;
             document.getElementById('progress').textContent = `سؤال ${currentTrial + 1} من ${illusions.length}`;
+            
+            // التأكد من تحميل الصورة قبل بدء المؤقت (اختياري، لكن يفضل لضمان الدقة)
             displayTime = Date.now();
         }
 
@@ -206,6 +279,7 @@
             const isCorrect = (userAnswer === trial.correctAnswer) ? 1 : 0;
 
             let susceptibilityScore;
+            // منطق حساب درجة الحساسية للوهم كما طلبت في الكود السابق
             if (isCorrect === 0) {
                 susceptibilityScore = reactionTimeMs * trial.strength;
             } else {
@@ -232,7 +306,6 @@
                 body: JSON.stringify(dataToSend)
             }).catch(err => console.error("Error sending data", err));
 
-            // التعديل هنا: الانتقال المباشر للسؤال التالي بدون عرض التعليل
             nextTrial();
         }
 
